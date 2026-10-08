@@ -412,6 +412,13 @@ window.loadAllMembers = async function() {
             addCell(row, joined);
             const actions = row.insertCell();
             actions.className = "row-actions";
+            const cardButton = document.createElement("button");
+            cardButton.className = "icon-action";
+            cardButton.type = "button";
+            cardButton.title = "Lihat dan cetak kartu member";
+            cardButton.setAttribute("aria-label", `Lihat kartu ${member.nama_lengkap || memberDoc.id}`);
+            cardButton.innerHTML = '<span class="material-icons-round">badge</span>';
+            cardButton.addEventListener("click", () => window.viewMemberCard(memberDoc.id, member));
             const editButton = document.createElement("button");
             editButton.className = "icon-action";
             editButton.type = "button";
@@ -426,7 +433,7 @@ window.loadAllMembers = async function() {
             deleteButton.setAttribute("aria-label", `Hapus ${member.nama_lengkap || memberDoc.id}`);
             deleteButton.innerHTML = '<span class="material-icons-round">delete</span>';
             deleteButton.addEventListener("click", () => deleteMember(memberDoc.id));
-            actions.append(editButton, deleteButton);
+            actions.append(cardButton, editButton, deleteButton);
         });
     } catch (error) {
         console.error(error);
@@ -512,8 +519,36 @@ window.loadDashboardSummary = async function() {
     }
 };
 
-window.printCard = function() {
+window.viewMemberCard = function(id, member) {
+    document.getElementById("memberCardName").textContent = member.nama_lengkap || "Member";
+    document.getElementById("memberCardId").textContent = id;
+    document.getElementById("memberCardWA").textContent = `Tel: ${member.no_whatsapp || "-"}`;
+    document.getElementById("memberCardQR").src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(id)}`;
+    const dialog = document.getElementById("memberCardDialog");
+    dialog.classList.remove("hidden");
+    document.getElementById("closeMemberCard").focus();
+};
+
+function closeMemberCardDialog() {
+    document.getElementById("memberCardDialog").classList.add("hidden");
+}
+
+document.getElementById("closeMemberCard").addEventListener("click", closeMemberCardDialog);
+document.getElementById("memberCardDialog").addEventListener("click", (event) => {
+    if (event.target.id === "memberCardDialog") closeMemberCardDialog();
+});
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeMemberCardDialog();
+});
+document.getElementById("printMemberCard").addEventListener("click", () => window.printCard("memberCardToPrint"));
+
+window.printCard = function(cardId = "kartuMemberArea") {
+    const card = document.getElementById(cardId);
+    const container = card?.closest(".premium-card-container");
+    if (!container) return;
+    container.classList.add("print-card-active");
     window.print();
+    container.classList.remove("print-card-active");
 };
 
 onAuthStateChanged(auth, async (user) => {

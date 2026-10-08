@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin | Up To You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./admin/sidebar/sidebar.css">
+</head>
+<body>
+    <aside id="adminSidebarMount" class="sidebar"></aside>
+    <main class="main-wrapper">
+        <div class="site-header topbar"><h1 id="page-title">Dashboard</h1><div class="system-status"><span class="material-icons-round">wifi</span> Sistem Online</div></div>
+        <div class="content">
+            <section id="page-dashboard" class="admin-dashboard-page">
+                <div class="dashboard-heading"><div><p class="eyebrow">RINGKASAN OPERASIONAL</p><h2>Ikhtisar kedai</h2></div><button class="btn btn-outline dashboard-refresh" type="button" onclick="loadDashboardSummary()"><span class="material-icons-round">sync</span> Perbarui</button></div>
+                <div class="admin-stat-grid">
+                    <article class="admin-stat"><span class="material-icons-round">groups</span><p>Total Member</p><strong id="summaryTotalMembers">—</strong><small>Member terdaftar</small></article>
+                    <article class="admin-stat"><span class="material-icons-round">local_cafe</span><p>Cup Terjual</p><strong id="summaryCupsSold">—</strong><small>Sejak transaksi tercatat</small></article>
+                    <article class="admin-stat"><span class="material-icons-round">receipt_long</span><p>Total Transaksi</p><strong id="summaryTransactionCount">—</strong><small>Pembelian dan penukaran</small></article>
+                    <article class="admin-stat"><span class="material-icons-round">redeem</span><p>Cup Ditukar</p><strong id="summaryCupsRedeemed">—</strong><small>Reward yang diklaim</small></article>
+                    <article class="admin-stat"><span class="material-icons-round">stars</span><p>Total Poin Aktif</p><strong id="summaryPoints">—</strong><small>Poin seluruh member</small></article>
+                </div>
+                <div class="card admin-dashboard-activity"><div class="list-heading"><div><p class="eyebrow">AKTIVITAS TERBARU</p><h2>Transaksi member</h2></div><span id="dashboardTransactionCount" class="activity-caption">Memuat transaksi...</span></div><div class="table-container"><table><thead><tr><th>Waktu</th><th>Member</th><th>Aktivitas</th><th>Cup</th><th>Perubahan Poin</th></tr></thead><tbody id="dashboardActivityBody"><tr><td colspan="5" class="table-message">Memuat transaksi...</td></tr></tbody></table></div><p class="activity-note">Data cup terjual dan penukaran tercatat sejak sistem riwayat transaksi aktif.</p></div>
+            </section>
+            <section id="page-scan" class="hidden"><div class="grid-2">
+                <div class="card"><div class="input-group"><label>Arahkan QR member ke kamera</label><div id="reader"></div><p id="scanStatus" class="scan-status" role="status" aria-live="polite">Kamera akan aktif saat menu scan dibuka.</p></div><button class="btn btn-primary" onclick="resetScanner()"><span class="material-icons-round">refresh</span> Scan Ulang</button></div>
+                <div id="memberPanel" class="card hidden"><div class="member-summary"><div><h2 id="dispNama">Nama Member</h2><p id="dispId">UTY-XXX-XXX</p></div><div class="points-total"><span>Saldo Poin</span><strong id="dispPoin">0</strong></div></div><div id="redeemNotice" class="redeem-notice hidden"></div><div class="grid-2"><div class="input-group"><label>Beli Cup (+10 Poin)</label><input type="number" id="inputCup" placeholder="Jumlah cup" min="1"><button class="btn btn-success" id="btnTambahPoin"><span class="material-icons-round">add_circle</span> Tambah poin</button></div><div class="input-group"><label>Redeem (-100 Poin)</label><input type="number" id="inputRedeem" placeholder="Jumlah free cup" min="1"><button class="btn btn-accent" id="btnRedeem"><span class="material-icons-round">redeem</span> Klaim reward</button></div></div></div>
+            </div></section>
+            <section id="page-add" class="hidden"><div class="card admin-form-card"><h2 id="memberFormTitle">Buat member baru</h2><form id="memberForm" class="member-form-grid"><label>Nama lengkap<input id="newNama" required autocomplete="name"></label><label>Email login<input id="newEmail" type="email" required autocomplete="email"><small id="emailHint" class="field-hint hidden">Email login akun member dikelola di Firebase Authentication.</small></label><label>Nomor WhatsApp<input id="newWA" type="tel" required autocomplete="tel"></label><label>Alamat<input id="newAddress" required autocomplete="street-address"></label><label id="passwordField">Password login<input id="newPassword" type="password" required minlength="6" autocomplete="new-password" placeholder="Minimal 6 karakter"></label><button class="btn btn-primary" id="btnBuatMember" type="submit"><span class="material-icons-round">person_add</span> Simpan member</button><button class="btn btn-outline hidden" id="cancelEdit" type="button">Batal edit</button></form></div><div id="newCardPreview" class="hidden card-preview"><div class="success-heading"><span class="material-icons-round">check_circle</span><h3>Kartu member siap</h3></div><div class="premium-card-container"><div class="member-card-premium" id="kartuMemberArea"><div class="mc-header"><div class="mc-brand"><span class="material-icons-round">local_cafe</span> UP TO YOU</div><div class="mc-type">Member</div></div><div class="mc-body"><div class="mc-info"><h3>Card Holder</h3><div class="name" id="cardNama">Nama Pelanggan</div><div class="id" id="cardId">UTY-ID-000</div><div class="wa" id="cardWA">Tel: +6287887242409</div></div><div class="mc-qr"><img id="cardQR" src="" alt="QR member"></div></div></div></div><button class="btn btn-accent print-button" onclick="printCard()"><span class="material-icons-round">print</span> Cetak kartu</button></div></section>
+            <section id="page-list" class="hidden"><div class="card"><div class="list-heading"><div><p class="eyebrow">DATABASE CUSTOMER</p><h2>Semua member</h2></div><button class="btn btn-primary refresh-button" onclick="loadAllMembers()"><span class="material-icons-round">sync</span> Refresh</button></div><div class="table-container"><table><thead><tr><th>ID Member</th><th>Nama</th><th>Email</th><th>WhatsApp</th><th>Alamat</th><th>Poin</th><th>Gabung</th><th>Aksi</th></tr></thead><tbody id="tableMembersBody"><tr><td colspan="8" class="table-message">Memuat data...</td></tr></tbody></table></div><p id="memberMessage" class="auth-message" role="status"></p></div></section>
+        </div>
+    </main>
+    <script type="module" src="./app.js"></script>
+</body>
+</html>

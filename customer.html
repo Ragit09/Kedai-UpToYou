@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Member | Up To You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./admin/sidebar/sidebar.css">
+    <link rel="stylesheet" href="./customer/customer.css">
+</head>
+<body class="customer-page member-app">
+    <aside id="memberSidebarMount" class="sidebar"></aside>
+    <main class="main-wrapper member-main-wrapper">
+        <header class="site-header topbar member-topbar">
+            <h1 id="memberPageTitle">Dashboard</h1>
+            <div class="system-status"><span class="material-icons-round">verified</span> Member Aktif</div>
+        </header>
+        <div class="content member-content">
+            <section id="member-page-dashboard" class="member-page-section">
+                <div class="customer-welcome"><div><p class="eyebrow">RINGKASAN MEMBER</p><h2>Halo, <span id="customerName">Member</span>.</h2><p>Berikut aktivitas membership-mu.</p></div></div>
+                <div class="member-stats-grid">
+                    <article class="member-stat"><span class="material-icons-round">stars</span><p>Total Poin</p><strong id="customerPoints">0</strong><small>Poin tersedia</small></article>
+                    <article class="member-stat"><span class="material-icons-round">redeem</span><p>Total Tukar</p><strong id="totalRedeems">0</strong><small>Free cup ditukar</small></article>
+                    <article class="member-stat"><span class="material-icons-round">receipt_long</span><p>Total Transaksi</p><strong id="totalTransactions">0</strong><small>Pembelian dan penukaran</small></article>
+                </div>
+                <section class="card member-activity-card"><div class="member-section-heading"><div><p class="eyebrow">RIWAYAT</p><h2>Aktivitas terakhir</h2></div><span id="activityCount" class="activity-caption">0 transaksi</span></div><div id="memberActivityList" class="activity-list"><p class="table-message">Memuat aktivitas...</p></div><p class="activity-note">Riwayat tercatat mulai fitur transaksi diaktifkan.</p></section>
+            </section>
+
+            <section id="member-page-card" class="member-page-section hidden">
+                <div class="member-section-heading"><div><p class="eyebrow">KARTU DIGITAL</p><h2>Kartu Member</h2><p>Tunjukkan QR ini kepada kasir untuk menambah atau menukar poin.</p></div></div>
+                <div class="card member-card-page"><div class="member-card-premium" id="customerMemberCard"><div class="mc-header"><div class="mc-brand"><span class="material-icons-round">local_cafe</span> UP TO YOU</div><div class="mc-type">Member</div></div><div class="mc-body"><div class="mc-info"><h3>Card Holder</h3><div class="name" id="cardCustomerName">Nama Member</div><div class="id" id="cardCustomerId">UTY-ID-000</div><div class="wa">Tel: +6287887242409</div></div><div class="mc-qr"><img id="customerQR" src="" alt="QR member"></div></div></div></div>
+            </section>
+
+            <section id="member-page-rewards" class="member-page-section hidden">
+                <div class="member-section-heading"><div><p class="eyebrow">KEUNTUNGANMU</p><h2>Reward Member</h2><p>Kumpulkan poin dari pembelian dan gunakan untuk free cup.</p></div></div>
+                <div class="member-reward-grid"><article class="member-reward-item"><span class="material-icons-round">add_circle</span><div><p class="eyebrow">KUMPULKAN</p><h3>10 poin per cup</h3><p>Setiap pembelian satu cup menambah 10 poin.</p></div></article><article class="member-reward-item"><span class="material-icons-round">redeem</span><div><p class="eyebrow">TUKARKAN</p><h3>100 poin = 1 free cup</h3><p>Tunjukkan kartu member saat melakukan penukaran.</p></div></article></div>
+                <div class="member-reward-balance"><span class="material-icons-round">stars</span><span><strong id="rewardBalance">0 poin</strong><small id="rewardProgress">100 poin untuk 1 free cup</small></span></div>
+            </section>
+
+            <section id="member-page-profile" class="member-page-section hidden">
+                <div class="member-section-heading"><div><p class="eyebrow">AKUN</p><h2>Profil Member</h2><p>Data profil hanya dapat dilihat. Hubungi admin jika ada data yang perlu diperbarui.</p></div></div>
+                <div class="member-profile-grid">
+                    <section class="card member-profile-details" aria-label="Data profil member">
+                        <h3>Data profil</h3>
+                        <dl>
+                            <div><dt>Nama lengkap</dt><dd id="profileName">Memuat...</dd></div>
+                            <div><dt>Email login</dt><dd id="profileEmail">Memuat...</dd></div>
+                            <div><dt>Nomor WhatsApp</dt><dd id="profilePhone">Memuat...</dd></div>
+                            <div><dt>Alamat</dt><dd id="profileAddress">Memuat...</dd></div>
+                        </dl>
+                    </section>
+                    <form id="passwordForm" class="card member-profile-form">
+                        <h3>Ganti password</h3>
+                        <label>Password saat ini<input id="currentPassword" type="password" required autocomplete="current-password"></label>
+                        <label>Password baru<input id="newPassword" type="password" required minlength="6" autocomplete="new-password"></label>
+                        <label>Ulangi password baru<input id="confirmPassword" type="password" required minlength="6" autocomplete="new-password"></label>
+                        <button class="btn btn-primary" type="submit"><span class="material-icons-round">lock_reset</span> Perbarui password</button>
+                        <p id="passwordMessage" class="auth-message" role="status"></p>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script type="module" src="./customer.js"></script>
+</body>
+</html>

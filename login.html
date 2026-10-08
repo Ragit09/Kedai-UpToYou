@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Up To You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="auth-page">
+    <header class="site-header login-header">
+        <a class="brand-lockup" href="./index.html"><span class="material-icons-round">local_cafe</span><span>UP TO YOU<small>COFFEE & MEMBERSHIP</small></span></a>
+        <a class="header-home-link" href="./index.html">Beranda</a>
+    </header>
+    <main class="auth-layout">
+        <section class="auth-panel">
+            <form id="loginForm" class="auth-form">
+                <p class="eyebrow">AREA ADMIN & MEMBER</p><h2>Masuk ke akun</h2><p class="form-intro">Gunakan email dan password terdaftar. Dashboard akan menyesuaikan role akun.</p>
+                <label>Email<input id="loginEmail" type="email" autocomplete="email" required placeholder="nama@email.com"></label>
+                <label>Password<input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Minimal 6 karakter"></label>
+                <button class="btn btn-primary" type="submit"><span class="material-icons-round">login</span> Masuk</button>
+            </form>
+            <p id="authMessage" class="auth-message" role="status" aria-live="polite"></p>
+            <a class="auth-home-link" href="./index.html">← Beranda</a>
+        </section>
+    </main>
+    <script type="module" src="./login.js"></script>
+</body>
+</html>
